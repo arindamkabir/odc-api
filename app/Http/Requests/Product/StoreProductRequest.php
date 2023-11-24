@@ -22,7 +22,15 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required'],
+            'categoryId' => ['required', 'exists:App\Models\Category,id'],
+            'description' => ['required'],
+            'price' => ['required', 'numeric'],
+            'SKU' => ['required'],
+            'primaryImg' => ['required', 'image'],
+            'secondaryImg' => ['image'],
+            'isFeatured' => ['required', 'boolean'],
+            'isHidden' => ['required', 'boolean'],
         ];
     }
 }
