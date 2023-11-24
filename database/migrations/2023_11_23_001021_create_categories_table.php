@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->foreignId('parent_id')
+                ->nullable()
+                ->constrained('categories')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->boolean('is_featured')->default(false);
+            $table->boolean('is_hidden')->default(false);
             $table->timestamps();
         });
     }
