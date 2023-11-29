@@ -11,7 +11,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,14 +23,14 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'categoryId' => ['required', 'exists:App\Models\Category,id'],
+            'category_id' => ['required', 'exists:App\Models\Category,id'],
             'description' => ['required'],
             'price' => ['required', 'numeric'],
             'SKU' => ['required'],
-            'primaryImg' => ['required', 'image'],
-            'secondaryImg' => ['image'],
-            'isFeatured' => ['required', 'boolean'],
-            'isHidden' => ['required', 'boolean'],
+            'primary_img' => ['required', 'image'],
+            'secondary_img' => ['image'],
+            'is_featured' => ['required', 'string'],
+            'is_hidden' => ['required', 'string'],
         ];
     }
 }

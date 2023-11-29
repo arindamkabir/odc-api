@@ -19,14 +19,14 @@ class ProductService
             $product->name = $attributes['name'];
             $product->description = $attributes['description'];
             $product->price = $attributes['price'];
-            $product->category_id = $attributes['categoryId'];
+            $product->category_id = $attributes['category_id'];
             $product->SKU = $attributes['SKU'];
-            $product->is_featured = $attributes['isFeatured'];
-            $product->is_hidden = $attributes['isHidden'];
+            $product->is_featured = $attributes['is_featured'] === "true" ? true : false;
+            $product->is_hidden = $attributes['is_hidden'] === "true" ? true : false;
             $product->save();
 
-            $this->storeImage($product, $attributes['primaryImg'], null, 'primary');
-            if (isset($attributes['secondaryImg'])) $this->storeImage($product, $attributes['secondaryImg'], null, 'secondary');
+            $this->storeImage($product, $attributes['primary_img'], null, 'primary');
+            if (isset($attributes['secondary_img'])) $this->storeImage($product, $attributes['secondary_img'], null, 'secondary');
 
             // if (count($attributes['stocks']) > 0)
             //     foreach ($attributes['stocks'] as $stock) {
