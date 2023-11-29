@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->customer()->count(10)->create();
+        // User::factory()->customer()->count(10)->create();
 
         $admin = Admin::factory()->create();
 
