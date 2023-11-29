@@ -3,11 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private CategoryService $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -20,19 +30,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $category = $this->categoryService->store($validated);
+
+        return response()->json($category);
     }
 
     /**
@@ -40,23 +46,22 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        $category = Category::query()
+            ->findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return response()->json($category);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCategoryRequest $request, string $id)
     {
-        //
+        $validated = $request->validated();
+
+        $category = $this->categoryService->update($id, $validated);
+
+        return response()->json($category);
     }
 
     /**
@@ -64,6 +69,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $deleted =  $this->categoryService->delete($id);
+
+        return response()->json($deleted);
     }
 }
