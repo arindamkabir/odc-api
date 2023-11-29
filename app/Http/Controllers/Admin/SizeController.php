@@ -12,7 +12,7 @@ class SizeController extends Controller
     public function index()
     {
         $sizes = Size::query()
-            ->paginate(10);
+            ->all(10);
 
         return response()->json($sizes);
     }
