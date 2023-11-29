@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->longText('description');
             $table->decimal('price')->unsigned();
+            $table->decimal('sales_price')->nullable()->unsigned();
             $table->string('SKU')->unique();
             $table->boolean('is_hidden');
             $table->boolean('is_featured');
