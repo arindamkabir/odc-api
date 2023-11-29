@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -29,8 +30,8 @@ class StoreProductRequest extends FormRequest
             'SKU' => ['required'],
             'primary_img' => ['required', 'image'],
             'secondary_img' => ['image'],
-            'is_featured' => ['required', 'string'],
-            'is_hidden' => ['required', 'string'],
+            'is_featured' => ['required', Rule::in(['true', 'false'])],
+            'is_hidden' => ['required', Rule::in(['true', 'false'])],
         ];
     }
 }
