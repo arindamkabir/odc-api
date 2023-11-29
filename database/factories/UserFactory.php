@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -27,6 +28,16 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
+    }
+
+    public function customer()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'userable_id' => Customer::factory(),
+                'userable_type' => 'App\Models\Customer'
+            ];
+        });
     }
 
     /**
