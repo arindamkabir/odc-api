@@ -25,6 +25,8 @@ return new class extends Migration
                 ->constrained('colors');
             $table->integer('quantity')
                 ->unsigned();
+            $table->decimal('price')->unsigned();
+            $table->decimal('sales_price')->nullable()->unsigned();
             $table->unique(['product_id', 'size_id', 'color_id']);
             $table->timestamps();
         });
