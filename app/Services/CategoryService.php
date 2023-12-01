@@ -11,8 +11,8 @@ class CategoryService
         $category = new Category;
         $category->name = $attributes["name"];
         $category->parent_id = $attributes["parent_id"];
-        $category->is_featured = $attributes["is_featured"];
-        $category->is_hidden = $attributes["is_hidden"];
+        $category->is_featured = $attributes["is_featured"] === "true" ? true : false;
+        $category->is_hidden = $attributes["is_hidden"] === "true" ? true : false;
         $category->save();
 
         return $category;
@@ -24,8 +24,8 @@ class CategoryService
             ->findOrFail($id);
         $category->name = $attributes["name"];
         $category->parent_id = $attributes["parent_id"];
-        $category->is_featured = $attributes["is_featured"];
-        $category->is_hidden = $attributes["is_hidden"];
+        $category->is_featured = $attributes["is_featured"] === "true" ? true : false;
+        $category->is_hidden = $attributes["is_hidden"] === "true" ? true : false;
         $category->save();
 
         return $category;
