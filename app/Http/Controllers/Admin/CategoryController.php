@@ -24,6 +24,8 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::query()
+            ->with(['parent'])
+            ->withCount(['products'])
             ->paginate(10);
 
         return response()->json($categories);
