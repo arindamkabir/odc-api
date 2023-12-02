@@ -13,6 +13,19 @@ return new class extends Migration
     {
         Schema::create('order_addresses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->constrained('orders');
+            $table->string('f_name');
+            $table->string('l_name');
+            $table->string('company');
+            $table->string('phone');
+            $table->string('email');
+            $table->string('line1');
+            $table->string('line2')->nullable();
+            $table->string('city');
+            $table->string('state');
+            $table->string('country');
+            $table->string('zip_code');
+            $table->enum('type', ['shipping', 'billing']);
             $table->timestamps();
         });
     }
