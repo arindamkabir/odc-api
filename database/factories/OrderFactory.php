@@ -20,7 +20,7 @@ class OrderFactory extends Factory
             'discount' => 0,
             'tax' => 0,
             'total' => 1000,
-            'status' => 'paid'
+            'status' => 'placed'
         ];
     }
 }

@@ -14,8 +14,8 @@ class TransactionFactory extends Factory
     public function definition()
     {
         return [
-            'mode' => 'stripe',
-            'status' => 'approved',
+            'mode' => 'cash',
+            // 'status' => 'approved',
         ];
     }
 }

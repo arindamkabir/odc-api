@@ -17,7 +17,10 @@ class StockFactory extends Factory
     public function definition()
     {
         return [
-            //
+            // 'color_id' =>
+            // 'size_id' =>
+            'quantity' => rand(100, 2000),
+            'price' => rand(100.12, 600.123)
         ];
     }
 }
