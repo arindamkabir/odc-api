@@ -16,7 +16,7 @@ class OrderItem extends Model
         'quantity',
     ];
 
-    protected $with = ['product'];
+    // protected $with = ['product'];
 
     // protected $appends = ['total'];
 

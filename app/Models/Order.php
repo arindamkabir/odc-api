@@ -153,4 +153,17 @@ class Order extends Model
     {
         return $query->whereMonth('created_at', $month);
     }
+
+    public function scopeSearch(Builder $query, $term): void
+    {
+        $query->whereHas('shipping', function (Builder $queryy) use ($term) {
+            $queryy->where('phone', 'like', '%' . $term . '%');
+        })->orWhereHas('order_items', function (Builder $query2) use ($term) {
+            $query2->whereHas('stock', function (Builder $query3) use ($term) {
+                $query3->whereHas('product', function (Builder $query4) use ($term) {
+                    $query4->where("name", 'like', '%' . $term . '%');
+                });
+            });
+        });
+    }
 }

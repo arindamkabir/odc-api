@@ -14,13 +14,14 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
+        $statuses = ['placed', 'paid', 'shipped', 'delivered', 'cancelled', 'returned'];
         return [
             'customer_id' => rand(1, 10),
             'subtotal' => 1000,
             'discount' => 0,
             'tax' => 0,
             'total' => 1000,
-            'status' => 'placed'
+            'status' => $statuses[rand(0, 5)]
         ];
     }
 }

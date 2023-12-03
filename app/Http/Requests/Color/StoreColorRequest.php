@@ -22,8 +22,8 @@ class StoreColorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'hex_code' => ['required', 'regex:/^#([a-f0-9]{6}|[a-f0-9]{3})$/i'],
+            'name' => ['required', 'string', 'max:255', 'unique:colors,name'],
+            'hex_code' => ['required', 'regex:/^#([a-f0-9]{6}|[a-f0-9]{3})$/i', 'unique:colors,hex_code'],
         ];
     }
 }
