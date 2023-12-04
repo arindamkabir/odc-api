@@ -24,7 +24,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'parent_id' => ['required', 'exists:App\Models\Category,id'],
+            'parent_id' => ['exists:App\Models\Category,id'],
             'is_featured' => ['required', Rule::in(['true', 'false'])],
             'is_hidden' => ['required', Rule::in(['true', 'false'])],
         ];

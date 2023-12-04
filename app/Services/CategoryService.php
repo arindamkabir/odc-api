@@ -10,7 +10,7 @@ class CategoryService
     {
         $category = new Category;
         $category->name = $attributes["name"];
-        $category->parent_id = $attributes["parent_id"];
+        $category->parent_id = $attributes["parent_id"] ?? null;
         $category->is_featured = $attributes["is_featured"] === "true" ? true : false;
         $category->is_hidden = $attributes["is_hidden"] === "true" ? true : false;
         $category->save();
@@ -23,7 +23,7 @@ class CategoryService
         $category = Category::query()
             ->findOrFail($id);
         $category->name = $attributes["name"];
-        $category->parent_id = $attributes["parent_id"];
+        $category->parent_id = $attributes["parent_id"] ?? null;
         $category->is_featured = $attributes["is_featured"] === "true" ? true : false;
         $category->is_hidden = $attributes["is_hidden"] === "true" ? true : false;
         $category->save();
