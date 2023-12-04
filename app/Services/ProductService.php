@@ -28,15 +28,16 @@ class ProductService
             $this->storeImage($product, $attributes['primary_img'], null, 'primary');
             if (isset($attributes['secondary_img'])) $this->storeImage($product, $attributes['secondary_img'], null, 'secondary');
 
-            if (count($attributes['stocks']) > 0)
-                foreach ($attributes['stocks'] as $stock) {
-                    $product->stocks()->create([
-                        'size_id' => $stock['size_id'],
-                        'color_id' => $stock['color_id'],
-                        'quantity' => $stock['quantity'],
-                        'price' => $stock['price']
-                    ]);
-                }
+            if (isset($attributes['stocks']))
+                if (count($attributes['stocks']) > 0)
+                    foreach ($attributes['stocks'] as $stock) {
+                        $product->stocks()->create([
+                            'size_id' => $stock['size_id'],
+                            'color_id' => $stock['color_id'],
+                            'quantity' => $stock['quantity'],
+                            'price' => $stock['price']
+                        ]);
+                    }
 
 
             // if (count($attributes['images']) > 0)
