@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('FRONTEND_URL', 'http://localhost:3000')],
+    'allowed_origins' => [env('FRONTEND_URL', 'http://localhost:3000', 'https://dev.keenbo.com', 'https://admin-area.dev.keenbo.com', 'https://www.dev.keenbo.com', 'https://www.staging.keenbo.com', 'https://admin-area.keenbo.com', 'https://keenbo.com', 'https://blackmartketbd.com', 'https://www.blackmartketbd.com', 'https://admin-area.blackmartketbd.com')],
 
     'allowed_origins_patterns' => [],
 

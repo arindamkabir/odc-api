@@ -15,9 +15,9 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
-        env('APP_URL') ? ','.parse_url(env('APP_URL'), PHP_URL_HOST) : '',
-        env('FRONTEND_URL') ? ','.parse_url(env('FRONTEND_URL'), PHP_URL_HOST) : ''
+        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1,admin-area.dev.keenbo.com,dev.keenbo.com,admin-area.keenbo.com,keenbo.com,admin-area.dev.blackmarketbd.com,dev.blackmarketbd.com,admin-area.blackmarketbd.com,blackmarketbd.com',
+        env('APP_URL') ? ',' . parse_url(env('APP_URL'), PHP_URL_HOST) : '',
+        env('FRONTEND_URL') ? ',' . parse_url(env('FRONTEND_URL'), PHP_URL_HOST) : ''
     ))),
 
     /*

@@ -46,7 +46,7 @@ class ProductSeeder extends Seeder
      */
     public function run(ProductService $productService)
     {
-        for ($i = 0; $i < 200; $i++) {
+        for ($j = 0; $j < 50; $j++) {
             $productService->store([
                 'name' => $this->faker->unique()->words($nb = 4, $asText = true),
                 'description' => $this->faker->text(400),
@@ -56,11 +56,36 @@ class ProductSeeder extends Seeder
                 'primary_img' =>  new UploadedFile(storage_path('test_images/' . rand(1, 26) . '.jpg'), 'originalname.jpg', 'image/jpg'),
                 'secondary_img' =>  new UploadedFile(storage_path('test_images/' . rand(1, 26) . '.jpg'), 'originalname.jpg', 'image/jpg'),
                 'stocks' => [
-                    ['color_id' => 2, 'size_id' => 2, 'quantity' => rand(20, 200), 'price' => rand(100.12, 600.123)],
-                    ['color_id' => 1, 'size_id' => 1, 'quantity' => rand(20, 200), 'price' => rand(100.12, 600.123)],
+                    ['size_id' => 2, 'quantity' => rand(1, 5), 'price' => rand(100.12, 600.123)],
+                    ['size_id' => 1, 'quantity' => rand(1, 5), 'price' => rand(100.12, 600.123)],
+                    ['size_id' => 3, 'quantity' => rand(1, 5), 'price' => rand(100.12, 600.123)],
+                    ['size_id' => 4, 'quantity' => rand(1, 5), 'price' => rand(100.12, 600.123)],
                 ],
-                'is_featured' => 0,
-                'is_hidden' => 0,
+                'has_colors' => "false",
+                'has_sizes' => "true",
+                'is_featured' => "true",
+                'is_hidden' => "true",
+                'extra_images' => [],
+            ]);
+        }
+
+        for ($i = 0; $i < 150; $i++) {
+            $productService->store([
+                'name' => $this->faker->unique()->words($nb = 4, $asText = true),
+                'description' => $this->faker->text(400),
+                'price' => $this->faker->numberBetween(10, 300),
+                'category_id' => $this->faker->numberBetween(3, 8),
+                'SKU' => $this->faker->unique()->numberBetween(1000000, 9999999),
+                'primary_img' =>  new UploadedFile(storage_path('test_images/' . rand(1, 26) . '.jpg'), 'originalname.jpg', 'image/jpg'),
+                'secondary_img' =>  new UploadedFile(storage_path('test_images/' . rand(1, 26) . '.jpg'), 'originalname.jpg', 'image/jpg'),
+                'stocks' => [
+                    ['color_id' => 2, 'size_id' => 2, 'quantity' => rand(1, 5), 'price' => rand(100.12, 600.123)],
+                    ['color_id' => 1, 'size_id' => 1, 'quantity' => rand(1, 5), 'price' => rand(100.12, 600.123)],
+                ],
+                'has_colors' => "true",
+                'has_sizes' => "true",
+                'is_featured' => "true",
+                'is_hidden' => "true",
                 'extra_images' => [],
             ]);
         }

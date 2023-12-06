@@ -20,6 +20,8 @@ return new class extends Migration
             $table->decimal('price')->unsigned();
             $table->decimal('sales_price')->nullable()->unsigned();
             $table->string('SKU')->unique();
+            $table->boolean('has_colors');
+            $table->boolean('has_sizes');
             $table->boolean('is_hidden');
             $table->boolean('is_featured');
             $table->timestamps();

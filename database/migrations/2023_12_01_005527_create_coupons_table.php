@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('min_cart_value');
             $table->decimal('value');
             $table->enum('value_type', ['fixed', 'percentage']);
+            $table->decimal('max_value')->nullable();
             $table->boolean('is_disabled')->default(false);
             $table->integer('redemptions');
             $table->dateTime('expiry_date');

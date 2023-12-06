@@ -21,6 +21,8 @@ class ProductService
             $product->price = $attributes['price'];
             $product->category_id = $attributes['category_id'];
             $product->SKU = $attributes['SKU'];
+            $product->has_colors = $attributes['has_colors'] === "true" ? true : false;
+            $product->has_sizes = $attributes['has_sizes'] === "true" ? true : false;
             $product->is_featured = $attributes['is_featured'] === "true" ? true : false;
             $product->is_hidden = $attributes['is_hidden'] === "true" ? true : false;
             $product->save();
@@ -32,8 +34,8 @@ class ProductService
                 if (count($attributes['stocks']) > 0)
                     foreach ($attributes['stocks'] as $stock) {
                         $product->stocks()->create([
-                            'size_id' => $stock['size_id'],
-                            'color_id' => $stock['color_id'],
+                            'size_id' => $attributes['has_sizes'] === "true" ? $stock['size_id'] : null,
+                            'color_id' => $attributes['has_colors'] === "true" ? $stock['color_id'] : null,
                             'quantity' => $stock['quantity'],
                             'price' => $stock['price']
                         ]);

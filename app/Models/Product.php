@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -90,6 +91,16 @@ class Product extends Model
         return $this->morphMany(Image::class, 'imageable');
     }
 
+    public function colors(): BelongsToMany
+    {
+        return $this->belongsToMany(Color::class, 'stocks', 'product_id', 'color_id');
+    }
+
+    public function sizes(): BelongsToMany
+    {
+        return $this->belongsToMany(Size::class, 'stocks', 'product_id', 'size_id');
+    }
+
     public function primaryImage(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable')->ofMany([
@@ -115,15 +126,41 @@ class Product extends Model
 
     // *** Scopes ***
 
-    public function scopeOfCategory(Builder $query, $catId): void
+    public function scopeOfCategory(Builder $query, string $catId): void
     {
         $query->where('category_id', $catId);
     }
 
-    public function scopeOfParentCategory(Builder $query, $catId): void
+    public function scopeOfCategories(Builder $query, array $catIds): void
+    {
+        $query->whereIn('category_id', $catIds);
+    }
+
+    public function scopeOfParentCategory(Builder $query, string $catId): void
     {
         $query->whereHas('category', function (Builder $query) use ($catId) {
             $query->where('parent_id', $catId);
+        });
+    }
+
+    public function scopeOfParentCategories(Builder $query, array $catIds): void
+    {
+        $query->whereHas('category', function (Builder $query) use ($catIds) {
+            $query->whereIn('parent_id', $catIds);
+        });
+    }
+
+    public function scopeOfSizes(Builder $query, array $sizeIds): void
+    {
+        $query->whereHas('stocks', function (Builder $query) use ($sizeIds) {
+            $query->whereIn('size_id', $sizeIds);
+        });
+    }
+
+    public function scopeOfColors(Builder $query, array $colorIds): void
+    {
+        $query->whereHas('stocks', function (Builder $query) use ($colorIds) {
+            $query->whereIn('color_id', $colorIds);
         });
     }
 

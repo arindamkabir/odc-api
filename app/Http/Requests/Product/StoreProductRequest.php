@@ -30,6 +30,8 @@ class StoreProductRequest extends FormRequest
             'SKU' => ['required'],
             'primary_img' => ['required', 'image'],
             'secondary_img' => ['image'],
+            'has_colors' => ['required', Rule::in(['true', 'false'])],
+            'has_sizes' => ['required', Rule::in(['true', 'false'])],
             'is_featured' => ['required', Rule::in(['true', 'false'])],
             'is_hidden' => ['required', Rule::in(['true', 'false'])],
         ];
