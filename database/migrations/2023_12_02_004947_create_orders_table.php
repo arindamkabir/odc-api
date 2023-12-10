@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('coupon_id')->nullable()->constrained('coupons');
             $table->decimal('subtotal')->unsigned();
             $table->decimal('discount')->default(0)->unsigned();
+            $table->decimal('shipping_cost')->unsigned();
             $table->decimal('tax')->default(0)->unsigned();
             $table->decimal('total')->unsigned();
             $table->boolean('is_billing_different')->default(false);
@@ -25,7 +26,8 @@ return new class extends Migration
             $table->date('cancellation_date')->nullable();
             $table->date('return_date')->nullable();
             $table->string('return_reason')->nullable();
-            $table->enum('status', ['placed', 'paid', 'shipped', 'delivered', 'cancelled', 'returned'])->default('placed');
+            $table->enum('delivery_location', ['dhaka', 'outside_dhaka', 'outside_bd']);
+            $table->enum('status', ['placed', 'paid', 'shipped', 'delivered', 'cancelled', 'returned']);
             $table->timestamps();
         });
     }

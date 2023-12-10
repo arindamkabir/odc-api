@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\CashTransaction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransactionFactory extends Factory
@@ -13,9 +14,12 @@ class TransactionFactory extends Factory
      */
     public function definition()
     {
+        $cashTxn = new CashTransaction();
+        $cashTxn->save();
+
         return [
-            'mode' => 'cash',
-            // 'status' => 'approved',
+            'transactable_type' => 'App\Models\CashTransaction',
+            'transactable_id' => $cashTxn->id
         ];
     }
 }

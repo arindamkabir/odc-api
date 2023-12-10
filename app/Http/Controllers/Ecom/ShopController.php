@@ -10,24 +10,19 @@ use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
-    public function colorsSizes()
+    public function getFilters()
     {
         $sizes = Size::all();
         $colors = Color::all();
-
-        return response()->json([
-            'colors' => $colors,
-            'sizes' => $sizes
-        ]);
-    }
-
-    public function categories()
-    {
         $categories = Category::query()
             ->with(['children'])
             ->parents()
             ->get();
 
-        return response()->json($categories);
+        return response()->json([
+            'categories' => $categories,
+            'colors' => $colors,
+            'sizes' => $sizes
+        ]);
     }
 }

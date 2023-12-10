@@ -20,8 +20,10 @@ class OrderFactory extends Factory
             'subtotal' => 1000,
             'discount' => 0,
             'tax' => 0,
-            'total' => 1000,
-            'status' => $statuses[rand(0, 5)]
+            'total' => 1070,
+            'status' => 'placed',
+            'delivery_location' => 'dhaka',
+            'shipping_cost' => 70
         ];
     }
 }

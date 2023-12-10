@@ -23,5 +23,4 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
-Route::get('/categories', [ShopController::class, 'categories'])->name('shop.categories');
-Route::get('/colors-sizes', [ShopController::class, 'colorsSizes'])->name('shop.colors-sizes');
+Route::get('/get-filters', [ShopController::class, 'getFilters'])->name('shop.get-filters');

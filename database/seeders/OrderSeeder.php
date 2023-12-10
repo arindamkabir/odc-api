@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CashTransaction;
 use App\Models\Order;
 use App\Models\OrderAddress;
 use App\Models\OrderItem;

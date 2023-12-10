@@ -16,19 +16,12 @@ class CategorySeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([
-            ['name' => 'Womens', 'slug' => Str::slug('Womens'), 'created_at' => date('Y-m-d H:i:s')],
-            ['name' => 'Mens', 'slug' => Str::slug('Mens'), 'created_at' => date('Y-m-d H:i:s')],
-        ]);
-
-        DB::table('categories')->insert([
-            ['name' => 'Tops', 'slug' => Str::slug('tops'), 'parent_id' => 1, 'created_at' => date('Y-m-d H:i:s')],
-            ['name' => 'Pants', 'slug' => Str::slug('pants'), 'parent_id' => 1, 'created_at' => date('Y-m-d H:i:s')],
-            ['name' => 'Jackets', 'slug' => Str::slug('jackets'), 'parent_id' => 1, 'created_at' => date('Y-m-d H:i:s')],
-
-
-            ['name' => 'Tops', 'slug' => Str::slug('tops'), 'parent_id' => 2, 'created_at' => date('Y-m-d H:i:s')],
-            ['name' => 'Pants', 'slug' => Str::slug('pants'), 'parent_id' => 2, 'created_at' => date('Y-m-d H:i:s')],
-            ['name' => 'Jackets', 'slug' => Str::slug('jackets'), 'parent_id' => 2, 'created_at' => date('Y-m-d H:i:s')],
+            ['name' => 'Tops', 'slug' => Str::slug('tops'), 'created_at' => date('Y-m-d H:i:s')],
+            ['name' => 'Pants', 'slug' => Str::slug('pants'), 'created_at' => date('Y-m-d H:i:s')],
+            ['name' => 'Jackets', 'slug' => Str::slug('jackets'), 'created_at' => date('Y-m-d H:i:s')],
+            ['name' => 'Tops', 'slug' => Str::slug('tops'), 'created_at' => date('Y-m-d H:i:s')],
+            ['name' => 'Pants', 'slug' => Str::slug('pants'), 'created_at' => date('Y-m-d H:i:s')],
+            ['name' => 'Jackets', 'slug' => Str::slug('jackets'), 'created_at' => date('Y-m-d H:i:s')],
         ]);
     }
 }

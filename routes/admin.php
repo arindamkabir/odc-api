@@ -17,6 +17,7 @@ Route::get('/user', function (Request $request) {
 Route::prefix('/products')->name('products.')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('index');
     Route::post('/', [ProductController::class, 'store'])->name('store');
+    Route::get('/cursor', [ProductController::class, 'cursorPaginate'])->name('index.cursor');
     Route::put('/{id}', [ProductController::class, 'update'])->name('update');
     Route::delete('/{id}', [ProductController::class, 'destroy'])->name('destroy');
 });
