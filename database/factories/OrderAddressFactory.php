@@ -20,7 +20,6 @@ class OrderAddressFactory extends Factory
             'f_name' => $this->faker->firstName,
             'l_name' => $this->faker->lastName,
             'phone' => $this->faker->phoneNumber,
-            'company' => $this->faker->company,
             'email' => $this->faker->email,
             'line1' => $this->faker->streetAddress,
             'city' => $this->faker->city,

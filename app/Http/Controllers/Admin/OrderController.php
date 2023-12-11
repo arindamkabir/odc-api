@@ -3,11 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\StoreOrderRequest;
 use App\Models\Order;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    private OrderService $orderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
+    }
+
     public function index(Request $request)
     {
         $orders = Order::query()
@@ -30,6 +39,15 @@ class OrderController extends Controller
         $order = Order::query()
             ->with(['customer', 'order_items', 'order_items.stock', 'order_items.stock.product', 'transaction'])
             ->findOrFail($id);
+
+        return response()->json($order);
+    }
+
+    public function store(StoreOrderRequest $request)
+    {
+        $validated = $request->validated();
+
+        $order = $this->orderService->store($validated);
 
         return response()->json($order);
     }

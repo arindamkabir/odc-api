@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->nullable()->constrained('customers');
             $table->foreignId('coupon_id')->nullable()->constrained('coupons');
             $table->decimal('subtotal')->unsigned();
-            $table->decimal('discount')->default(0)->unsigned();
+            $table->decimal('discount')->unsigned();
             $table->decimal('shipping_cost')->unsigned();
             $table->decimal('tax')->default(0)->unsigned();
             $table->decimal('total')->unsigned();

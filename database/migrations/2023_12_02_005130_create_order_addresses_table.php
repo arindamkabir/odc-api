@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained('orders');
             $table->string('f_name');
             $table->string('l_name');
-            $table->string('company');
             $table->string('phone');
             $table->string('email');
             $table->string('line1');
