@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ecom;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Size;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -35,9 +36,8 @@ class ProductController extends Controller
                 $colors,
                 fn ($query, $arr) => $query->ofColors($arr)
             )
-            // ->where('has_colors', true)
-            // ->where('has_sizes', true)
-            ->paginate($perPage);
+            ->orderBy('created_at', 'desc')
+            ->cursorPaginate(12);
 
         return response()->json($products);
     }
@@ -63,5 +63,30 @@ class ProductController extends Controller
             'relatedProducts' => $relatedProducts,
             'sizes' => $sizes
         ]);
+    }
+
+    public function category(Request $request, string $slug)
+    {
+        $sizes = count($request->query("sizes", [])) > 0 ? $request->query("sizes") : null;
+        $colors = count($request->query("colors", [])) > 0 ? $request->query("colors") : null;
+
+        $products = Product::query()
+            ->with(['category', 'primaryImage', 'stocks', 'stocks.color', 'stocks.size'])
+            ->withCount(['sizes', 'colors'])
+            ->when(
+                $sizes,
+                fn ($query, $arr) => $query->ofSizes($arr)
+            )
+            ->when(
+                $colors,
+                fn ($query, $arr) => $query->ofColors($arr)
+            )
+            ->whereHas('category', function (Builder $query) use ($slug) {
+                $query->where('slug', $slug);
+            })
+            ->orderBy('created_at', 'desc')
+            ->cursorPaginate(12);
+
+        return response()->json($products);
     }
 }
