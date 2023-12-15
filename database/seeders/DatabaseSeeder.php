@@ -13,6 +13,7 @@ use App\Models\StripeInformation;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -25,13 +26,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            UserSeeder::class,
-            CategorySeeder::class,
-            ColorSeeder::class,
-            SizeSeeder::class,
-            ProductSeeder::class,
-            OrderSeeder::class
-        ]);
+        if (App::environment('local')) {
+            $this->call([
+                UserSeeder::class,
+                CategorySeeder::class,
+                ColorSeeder::class,
+                SizeSeeder::class,
+                ProductSeeder::class,
+                OrderSeeder::class
+            ]);
+        }
     }
 }
