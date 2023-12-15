@@ -65,8 +65,9 @@ class ProductService
         return $deleted;
     }
 
-    public function update(Product $product, array $attributes)
+    public function update(string $id, array $attributes)
     {
+        $product = Product::query()->findOrFail($id);
         $product->name = $attributes['name'];
         $product->description = $attributes['description'];
         $product->price = $attributes['price'];
