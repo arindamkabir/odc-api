@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Http\Requests\Product\StoreProductImageRequest;
+use App\Http\Requests\Product\UpdateProductPrimaryImageRequest;
+use App\Models\Order;
 use App\Models\Product;
 use App\Services\ProductService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -46,12 +50,14 @@ class ProductController extends Controller
                 $colors,
                 fn ($query, $arr) => $query->ofColors($arr)
             )
-            ->where('has_colors', true)
-            ->where('has_sizes', true)
             ->paginate(10);
 
         return response()->json($products);
     }
+
+    // public function getRelationCount(Request $request)
+    // {
+    // }
 
     public function cursorPaginate(Request $request)
     {
@@ -78,8 +84,6 @@ class ProductController extends Controller
                 $colors,
                 fn ($query, $arr) => $query->ofColors($arr)
             )
-            ->where('has_colors', true)
-            ->where('has_sizes', true)
             ->orderBy('id', 'desc')
             ->cursorPaginate(10);
 
@@ -104,19 +108,54 @@ class ProductController extends Controller
     public function show(string $slug)
     {
         $product = Product::query()
-            ->with(['category', 'primaryImage', 'secondaryImage'])
+            ->with(['category', 'primaryImage', 'stocks', 'stocks.color', 'stocks.size', 'extraImages'])
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return response()->json($product);
+        // $orders = Order::query()
+        //     ->whereHas('order_items', function (Builder $query) use ($product) {
+        //         $query->whereIn('stock_id', $product->stocks->pluck('id'));
+        //     })
+        //     ->paginate(10, ['*'], 'order-page');
+
+        return response()->json(['product' => $product]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, string $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $validated = $request->validated();
+
+        $product = $this->productService->update($product, $validated);
+
+        return response()->json($product);
+    }
+
+    public function updatePrimaryImage(UpdateProductPrimaryImageRequest $request, string $id)
+    {
+        $validated = $request->validated();
+
+        $product = $this->productService->updatePrimaryImage($id, $validated);
+
+        return response()->json($product);
+    }
+
+    public function addImages(StoreProductImageRequest $request, string $id)
+    {
+        $validated = $request->validated();
+
+        $product = $this->productService->addImages($id, $validated);
+
+        return response()->json($product);
+    }
+
+    public function deleteImage(string $id)
+    {
+        $deleted = $this->productService->deleteImage($id);
+
+        return response()->json($deleted);
     }
 
     /**

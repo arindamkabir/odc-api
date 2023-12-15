@@ -25,11 +25,12 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'category_id' => ['required', 'exists:App\Models\Category,id'],
-            'description' => ['required'],
+            'description' => ['required', 'string'],
             'price' => ['required', 'numeric'],
+            'sales_price' => ['nullable', 'numeric'],
             'SKU' => ['required'],
-            'primary_img' => ['required', 'image'],
-            'secondary_img' => ['image'],
+            'has_colors' => ['required', Rule::in(['true', 'false'])],
+            'has_sizes' => ['required', Rule::in(['true', 'false'])],
             'is_featured' => ['required', Rule::in(['true', 'false'])],
             'is_hidden' => ['required', Rule::in(['true', 'false'])],
         ];

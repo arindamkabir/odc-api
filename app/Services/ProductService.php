@@ -40,15 +40,29 @@ class ProductService
                             'price' => $stock['price']
                         ]);
                     }
-
-
-            // if (count($attributes['images']) > 0)
-            //     foreach ($attributes['images'] as $image) {
-            //         $this->storeImage($product, $image);
-            //     }
-
             return $product;
         });
+    }
+
+    public function addImages(string $product_id, array $attributes)
+    {
+        return DB::transaction(function () use ($product_id, $attributes) {
+            if (count($attributes['images']) > 0) {
+
+                $product = Product::query()->with(["primaryImage"])->findOrFail($product_id);
+                foreach ($attributes['images'] as $image) {
+                    $this->storeImage($product, $image);
+                }
+            }
+        });
+    }
+
+    public function deleteImage(string $id)
+    {
+        $image = ModelsImage::query()->findOrFail($id);
+        $deleted = $image->delete();
+
+        return $deleted;
     }
 
     public function update(Product $product, array $attributes)
@@ -56,13 +70,30 @@ class ProductService
         $product->name = $attributes['name'];
         $product->description = $attributes['description'];
         $product->price = $attributes['price'];
-        $product->category_id = $attributes['categoryId'];
+        $product->sales_price = $attributes['sales_price'];
+        $product->category_id = $attributes['category_id'];
         $product->SKU = $attributes['SKU'];
-        $product->is_featured = $attributes['isFeatured'];
-        $product->is_hidden = $attributes['isHidden'];
+        $product->has_colors = $attributes['has_colors'] === "true" ? true : false;
+        $product->has_sizes = $attributes['has_sizes'] === "true" ? true : false;
+        $product->is_featured = $attributes['is_featured'] === "true" ? true : false;
+        $product->is_hidden = $attributes['is_hidden'] === "true" ? true : false;
         $product->save();
     }
 
+    public function updatePrimaryImage(string $product_id, $attributes)
+    {
+        return DB::transaction(function () use ($product_id, $attributes) {
+            $product = Product::query()->with(["primaryImage"])->findOrFail($product_id);
+            $oldPrimaryImage = $product->primaryImage;
+
+            $this->storeImage($product, $attributes['primary_img'], null, 'primary');
+
+            Storage::disk('public')->delete($oldPrimaryImage->url);
+            $oldPrimaryImage->delete();
+
+            return $product->fresh(["primaryImage"]);
+        });
+    }
 
     /**
      *

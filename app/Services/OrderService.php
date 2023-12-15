@@ -43,7 +43,8 @@ class OrderService
                     'price' => $stock->price,
                     'sales_price' => $stock->sales_price,
                     'quantity' => $value["quantity"],
-                    'stock_id' => $value['stock_id']
+                    'stock_id' => $value['stock_id'],
+                    'product_id' => $value['product_id']
                 ]);
 
                 $subtotal += (floatval($stock->price) * floatval($value["quantity"]));

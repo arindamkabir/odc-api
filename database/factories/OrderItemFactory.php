@@ -45,6 +45,7 @@ class OrderItemFactory extends Factory
                 $stock = Product::find($product_id)->stocks()->first();
                 return $stock->id;
             },
+            'product_id' => $product_id
         ];
     }
 }
