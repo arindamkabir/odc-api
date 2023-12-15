@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('return_reason')->nullable();
             $table->enum('delivery_location', ['dhaka', 'outside_dhaka', 'outside_bd']);
             $table->enum('status', ['placed', 'paid', 'shipped', 'delivered', 'cancelled', 'returned']);
+            $table->enum('platform', ['website', 'app', 'facebook', 'instagram', 'tiktok', 'youtube']);
             $table->timestamps();
         });
     }
