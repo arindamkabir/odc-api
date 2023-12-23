@@ -37,7 +37,7 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::query()
-            ->with(['customer', 'order_items', 'order_items.stock', 'order_items.stock.product', 'transaction'])
+            ->with(['customer', 'order_items', 'order_items.stock', 'order_items.stock.color', 'order_items.stock.size', 'order_items.stock.product', 'order_items.stock.product.primaryImage', 'transaction', 'shipping', 'billing'])
             ->findOrFail($id);
 
         return response()->json($order);

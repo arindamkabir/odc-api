@@ -16,7 +16,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $with = ['stocks'];
+    // protected $with = ['stocks'];
 
     const STOCK_STATUSES = [
         'in_stock' => 'In Stock',
