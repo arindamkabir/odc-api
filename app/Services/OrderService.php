@@ -10,6 +10,8 @@ use App\Models\Product;
 use App\Models\Transaction;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Spatie\DiscordAlerts\Facades\DiscordAlert;
+
 
 class OrderService
 {
@@ -44,7 +46,7 @@ class OrderService
                     'sales_price' => $stock->sales_price,
                     'quantity' => $value["quantity"],
                     'stock_id' => $value['stock_id'],
-                    'product_id' => $value['product_id']
+                    'product_id' => $value['id']
                 ]);
 
                 $subtotal += (floatval($stock->price) * floatval($value["quantity"]));
@@ -101,6 +103,8 @@ class OrderService
             $shipping->zip_code = $attributes['zip_code'];
             $shipping->type = "shipping";
             $shipping->save();
+
+            DiscordAlert::message("Testing testing 123.");
 
             return $order->load(['shipping', 'transaction', 'order_items']);
         });
