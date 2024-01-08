@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
@@ -62,6 +63,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/', [CustomerController::class, 'store'])->name('store');
         Route::put('/{id}', [CustomerController::class, 'update'])->name('update');
         Route::delete('/{id}', [CustomerController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('/coupons')->name('coupons.')->group(function () {
+        Route::get('/', [CouponController::class, 'index'])->name('index');
+        Route::post('/', [CouponController::class, 'store'])->name('store');
+        Route::put('/{id}', [CouponController::class, 'update'])->name('update');
+        Route::delete('/{id}', [CouponController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('/orders')->name('orders.')->group(function () {

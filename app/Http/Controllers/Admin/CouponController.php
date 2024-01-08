@@ -3,32 +3,43 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Coupon\StoreCouponRequest;
+use App\Http\Requests\Coupon\UpdateCouponRequest;
+use App\Models\Coupon;
+use App\Services\CouponService;
 use Illuminate\Http\Request;
 
 class CouponController extends Controller
 {
+    private CouponService $couponService;
+
+    public function __construct(CouponService $couponService)
+    {
+        $this->couponService = $couponService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $coupons = Coupon::query()
+            ->withCount(['orders'])
+            ->paginate(10);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json($coupons);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCouponRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $coupon = $this->couponService->store($validated);
+
+        return response()->json($coupon);
     }
 
     /**
@@ -40,19 +51,15 @@ class CouponController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCouponRequest $request, string $id)
     {
-        //
+        $validated = $request->validated();
+
+        $coupon = $this->couponService->update($id, $validated);
+
+        return response()->json($coupon);
     }
 
     /**
